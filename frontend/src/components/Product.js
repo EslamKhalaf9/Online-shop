@@ -1,13 +1,20 @@
 import React from "react";
-import { Col, Card, Button } from "react-bootstrap";
+import { Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Rate from "./Rate";
 const Product = ({ product }) => {
   return (
     <Col sm={12} md={6} lg={4}>
       <Card style={{ width: "18rem" }} className='text-center my-2'>
-        <Card.Img variant='top' src={product.image} />
+        <Link className='link' to={`/product/${product._id}`}>
+          <Card.Img variant='top' src={product.image} />
+        </Link>
         <Card.Body className='bg-dark'>
-          <Card.Title>{product.name}</Card.Title>
+          <Card.Title>
+            <Link className='link' to={`/product/${product._id}`}>
+              {product.name}
+            </Link>
+          </Card.Title>
           <Card.Text as='div'>
             <div className='my-3'>
               <Rate rating={product.rating} numReviews={product.numReviews} />
