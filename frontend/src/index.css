@@ -1,8 +1,12 @@
 main {
-  min-height: 80vh;
+  min-height: 85vh;
 }
 
 a.link {
   color: white;
   text-decoration: none;
+}
+
+.-webkit-center {
+  text-align: -webkit-center;
 }
