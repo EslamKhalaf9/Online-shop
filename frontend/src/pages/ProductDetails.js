@@ -1,21 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Col, Card, Row, ListGroup, Button, Image } from "react-bootstrap";
 
 import Rate from "../components/Rate";
 import { productDetails } from "../redux/actions/productActions";
 
 const ProductDetails = () => {
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const { product, error, loading } = useSelector(
     (state) => state.productDetails
   );
-  console.log(product);
   const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(productDetails(id));
-  }, []);
+  }, [dispatch, id]);
+
+  const addToCartHandeller = () => {
+    navigate(`/cart/${id}/?qty=${qty}`, { replace: true });
+  };
   return (
     <>
       {loading ? (
@@ -38,8 +43,8 @@ const ProductDetails = () => {
                 </ListGroup.Item>
                 <ListGroup.Item className='bg-dark'>
                   <Rate
-                    rating={product.rating}
-                    numReviews={product.numReviews}
+                    rating={product.rating || 0}
+                    numReviews={product.numReviews || 0}
                   />
                 </ListGroup.Item>
                 <ListGroup.Item className='bg-dark'>
@@ -71,10 +76,32 @@ const ProductDetails = () => {
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item className='bg-dark'>
+                    <Row>
+                      <Col>
+                        <select
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                          className='w-100 py-2 px-1'
+                        >
+                          {product.countInStock > 0
+                            ? [...Array(product.countInStock).keys()].map(
+                                (i) => (
+                                  <option key={i} value={i + 1}>
+                                    {i + 1}
+                                  </option>
+                                )
+                              )
+                            : null}
+                        </select>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  <ListGroup.Item className='bg-dark'>
                     <Button
-                      className='btn-block'
+                      className='btn-block w-100 my-2'
                       type='button'
                       disabled={product.countInStock === 0}
+                      onClick={addToCartHandeller}
                     >
                       Add To Cart
                     </Button>

@@ -11,7 +11,7 @@ const Home = () => {
   );
   useEffect(() => {
     dispatch(listProducts());
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <h1 className='mt-2 text-center'>Products List</h1>
