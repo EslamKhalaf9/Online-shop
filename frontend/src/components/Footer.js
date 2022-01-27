@@ -1,10 +1,9 @@
 import React from "react";
-import { Container } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <footer className='text-center p-3 bg-dark lead'>
-      <Container>Eslam Khalaf &copy;</Container>
+    <footer className='text-center bg-slate-800 text-gray-200 p-4 text-2xl mt-4'>
+      Eslam Khalaf &copy;
     </footer>
   );
 };

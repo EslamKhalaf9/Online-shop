@@ -1,9 +1,10 @@
-import { ADD_TO_CART } from "../actions/types";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../actions/types";
 
 //loat cart list from local storage
-const localStorageCart = JSON.parse(localStorage.getItem("cart"));
+let localStorageCart = JSON.parse(localStorage.getItem("cart"));
+if (!localStorageCart) localStorageCart = { products: [] };
 //{products: []}
-const addToCartReducer = (initialState = localStorageCart, action) => {
+const cartReducer = (initialState = localStorageCart, action) => {
   switch (action.type) {
     case ADD_TO_CART:
       //check if product already in the cart
@@ -13,8 +14,9 @@ const addToCartReducer = (initialState = localStorageCart, action) => {
 
       //if so update qty only
       if (existingProduct !== -1) {
-        initialState.products[existingProduct].qty = action.payload.qty;
-        return initialState;
+        const newItems = { ...initialState };
+        newItems.products[existingProduct].qty = action.payload.qty;
+        return newItems;
       }
 
       //else append it to the cart
@@ -23,13 +25,19 @@ const addToCartReducer = (initialState = localStorageCart, action) => {
         products: [...initialState.products, action.payload],
       };
 
-      //save the last cart version to the local storage
-      localStorage.setItem("cart", JSON.stringify(cart));
-
       return cart;
+
+    case REMOVE_FROM_CART:
+      const productIndex = initialState.products.findIndex(
+        (p) => p.product === action.payload
+      );
+      const newItems = { ...initialState };
+      newItems.products.splice(productIndex, 1);
+      return newItems;
+
     default:
       return initialState;
   }
 };
 
-export default addToCartReducer;
+export default cartReducer;

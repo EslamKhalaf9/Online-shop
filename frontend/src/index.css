@@ -1,12 +1,11 @@
-main {
-  min-height: 85vh;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.transition-c {
+  @apply transition-all ease-out delay-200;
 }
 
-a.link {
-  color: white;
-  text-decoration: none;
-}
-
-.-webkit-center {
-  text-align: -webkit-center;
+.min-h-80 {
+  min-height: 84vh;
 }
