@@ -7,19 +7,25 @@ const Rate = ({ rating, numReviews, color }) => {
   for (let i = 0; i < 5; i++) {
     if (i <= rating - 1) {
       //yellow
-      markup.push(<FaStar key={i} style={{ color }} />);
+      markup.push(
+        <FaStar className='inline-block' key={i} style={{ color }} />
+      );
     } else if (rating - i > 0 && rating - i < 1) {
       //half yellow
-      markup.push(<FaStarHalfAlt key={i} style={{ color }} />);
+      markup.push(
+        <FaStarHalfAlt className='inline-block' key={i} style={{ color }} />
+      );
     } else {
       //grey
-      markup.push(<FaRegStar key={i} style={{ color }} />);
+      markup.push(
+        <FaRegStar className='inline-block' key={i} style={{ color }} />
+      );
     }
   }
   return (
-    <>
-      {markup} {numReviews} reviews
-    </>
+    <div className='flex items-center'>
+      {markup} <span>{numReviews} reviews</span>
+    </div>
   );
 };
 
