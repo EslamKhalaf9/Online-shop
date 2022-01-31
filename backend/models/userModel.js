@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import Joi from "joi";
+import bcrypt from "bcryptjs";
 
 const userSchema = mongoose.Schema(
   {
@@ -25,6 +27,30 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+userSchema.methods.hashPassword = async function () {
+  this.password = await bcrypt.hash(this.password, 10);
+  // console.log(this.password);
+};
+
 const User = mongoose.model("User", userSchema);
+
+export const validateLogin = async (user) => {
+  const loginDataScema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().alphanum().min(6).max(20).trim().required(),
+  });
+
+  return loginDataScema.validateAsync(user);
+};
+export const validateSignup = async (user) => {
+  const loginDataScema = Joi.object({
+    name: Joi.string().alphanum().required().min(2).max(50),
+    email: Joi.string().email().required(),
+    password: Joi.string().alphanum().min(6).max(20).trim().required(),
+    isAdmin: Joi.boolean(),
+  });
+
+  return loginDataScema.validateAsync(user);
+};
 
 export default User;
