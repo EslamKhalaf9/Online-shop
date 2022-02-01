@@ -30,7 +30,7 @@ const Header = () => {
             </li>
             <li className='mx-2 my-2 md:my-0 hover:text-gray-300 transition-c'>
               <BsPersonFill className='me-1 inline-block mr-1' />
-              <NavLink to='/'>login</NavLink>
+              <NavLink to='/login'>login</NavLink>
             </li>
           </ul>
         </div>
