@@ -1,25 +1,30 @@
-import express from "express";
-import cors from "cors";
-import "dotenv/config";
-import connectDB from "./config/database.js";
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import connectDB from './config/database.js';
 
-import productsRouter from "./routes/products.js";
-import usersRouter from "./routes/usersRoutes.js";
+import productsRouter from './routes/products.js';
+import usersRouter from './routes/usersRoutes.js';
+
+dotenv.config();
 
 connectDB();
 const app = express();
 
 app.use(express.json());
-//@TODO: modify it later its bad for security
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+  })
+);
 
-app.use("/api/products", productsRouter);
-app.use("/api/user", usersRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/user', usersRouter);
 
 //not found handler
 app.use((req, res, next) => {
   res.status(404);
-  const err = new Error("not found");
+  const err = new Error('not found');
   next(err);
 });
 

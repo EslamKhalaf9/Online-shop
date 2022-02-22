@@ -1,11 +1,18 @@
-import Product from "../models/productModel.js";
+import asyncHandler from 'express-async-handler';
 
-export const getProducts = async (req, res) => {
+import Product from '../models/productModel.js';
+
+export const getProducts = asyncHandler(async (req, res) => {
   const fetchedProducts = await Product.find();
   res.send(fetchedProducts);
-};
-export const getProduct = async (req, res) => {
+});
+
+export const getProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const fetchedProduct = await Product.findById(id);
+  if (!fetchedProduct) {
+    res.status(400);
+    throw new Error('Product not found');
+  }
   res.send(fetchedProduct);
-};
+});

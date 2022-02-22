@@ -1,16 +1,17 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 
-import thunk from "redux-thunk";
-import cartReducer from "./reducers/addToCartReducer";
-import productDetailsReducer from "./reducers/productDetailsReducer";
-import productListReducer from "./reducers/productListReducer";
-import { userLoginReducer } from "./reducers/userReducers";
+import thunk from 'redux-thunk';
+import cartReducer from './reducers/addToCartReducer';
+import productDetailsReducer from './reducers/productDetailsReducer';
+import productListReducer from './reducers/productListReducer';
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
 });
 
 const enhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;

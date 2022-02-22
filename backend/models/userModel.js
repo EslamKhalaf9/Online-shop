@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import Joi from "joi";
-import bcrypt from "bcryptjs";
+import mongoose from 'mongoose';
+import Joi from 'joi';
+import bcrypt from 'bcryptjs';
 
 const userSchema = mongoose.Schema(
   {
@@ -27,12 +27,16 @@ const userSchema = mongoose.Schema(
   { timestamps: true }
 );
 
+userSchema.methods.matchPassword = async function (password) {
+  return await bcrypt.compare(password, this.password); // true if they match
+};
+
 userSchema.methods.hashPassword = async function () {
   this.password = await bcrypt.hash(this.password, 10);
   // console.log(this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 export const validateLogin = async (user) => {
   const loginDataScema = Joi.object({
