@@ -9,6 +9,9 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
 } from '../actions/types';
 let userInfo = JSON.parse(localStorage.getItem('userInfo'));
 if (!userInfo) userInfo = {};
@@ -40,7 +43,10 @@ export const userRegisterReducer = (initialState = userInfo, action) => {
   }
 };
 
-export const userDetailsReducer = (initialState = { user: {} }, action) => {
+export const userDetailsReducer = (
+  initialState = { user: { userInfo } },
+  action
+) => {
   switch (action.type) {
     case USER_DETAILS_REQUEST:
       return { ...initialState, loading: true };
@@ -55,12 +61,12 @@ export const userDetailsReducer = (initialState = { user: {} }, action) => {
 
 export const userUpdateReducer = (initialState = {}, action) => {
   switch (action.type) {
-    case USER_DETAILS_REQUEST:
-      return { loading: true };
-    case USER_DETAILS_SUCCESS:
-      return { loading: false, user: action.payload };
-    case USER_DETAILS_FAIL:
-      return { loading: false, error: action.payload };
+    case USER_UPDATE_REQUEST:
+      return { loading: true, success: false };
+    case USER_UPDATE_SUCCESS:
+      return { loading: false, success: true, user: action.payload };
+    case USER_UPDATE_FAIL:
+      return { loading: false, success: false, error: action.payload };
     default:
       return initialState;
   }

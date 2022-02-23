@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userDetails, userRegister } from '../redux/actions/userActions';
+import { userDetails, userUpdate } from '../redux/actions/userActions';
 import Message from '../components/Message';
 import Spinner from '../components/Spinner';
 
@@ -11,26 +11,36 @@ const UserDetails = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPssword] = useState('');
   const [message, setMessage] = useState('');
+  const [successMsg, setSuccessMsg] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {
-    loading,
-    error,
-    userInfo: authorizedUser,
-  } = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = useSelector((state) => state.userLogin);
 
   const { user } = useSelector((state) => state.userDetails);
 
+  const { success, user: updatedUser } = useSelector(
+    (state) => state.userUpdate
+  );
+
   useEffect(() => {
-    console.log(authorizedUser);
-    if (!authorizedUser) {
-      navigate('/', { replace: true });
+    // dispatch(userDetails());
+    if (!user.name) dispatch(userDetails());
+
+    if (updatedUser) {
+      setEmail(updatedUser.email);
+      setName(updatedUser.name);
+      //todo reset updated user
+      //bug when you log out and login again the previous updated user data show in the form
+      setTimeout(() => {
+        setSuccessMsg(false);
+      }, 5000);
+    } else {
+      setEmail(user.email);
+      setName(user.name);
+      setSuccessMsg(false);
     }
-    if (!user.email) dispatch(userDetails());
-    setEmail(user.email);
-    setName(user.name);
-  }, [navigate, authorizedUser, dispatch, user]);
+  }, [navigate, userInfo, dispatch, user, updatedUser, success]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,8 +48,8 @@ const UserDetails = () => {
       setMessage("Passwords arn't match");
     } else {
       setMessage('');
-      console.log('submitted...', loading);
-      dispatch(userRegister(name, email, password));
+      dispatch(userUpdate({ name, email, password }));
+      setSuccessMsg(success);
     }
   };
   return (
@@ -48,6 +58,9 @@ const UserDetails = () => {
       onSubmit={(e) => handleSubmit(e)}
     >
       {message && <Message message={message} bg='bg-red-500' />}
+      {successMsg && (
+        <Message message={'Updated Successfully'} bg='bg-green-500' />
+      )}
       {error && <Message message={error} bg='bg-red-500' />}
       {loading && <Spinner />}
       <h1 className='text-4xl'>Profile</h1>

@@ -1,11 +1,12 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaBars, FaSignOutAlt } from 'react-icons/fa';
 import { BsPersonFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../redux/actions/userActions';
 
 const Header = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
   console.log(userInfo);
@@ -21,6 +22,7 @@ const Header = () => {
   const handleLogout = () => {
     console.log('logging out...');
     dispatch(userLogout());
+    navigate('/', { replace: false });
   };
 
   return (
