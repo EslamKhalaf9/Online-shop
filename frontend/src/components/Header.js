@@ -43,7 +43,7 @@ const Header = () => {
               <>
                 <li className='mx-2 my-2 md:my-0 hover:text-gray-300 transition-c'>
                   <BsPersonFill className='me-1 inline-block mr-1' />
-                  <NavLink to='/me'>{userInfo.name}</NavLink>
+                  <NavLink to='/profile'>{userInfo.name}</NavLink>
                 </li>
                 <li className='mx-2 my-2 md:my-0 hover:text-gray-300 transition-c'>
                   <FaSignOutAlt className='me-1 inline-block mr-1' />

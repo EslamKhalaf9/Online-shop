@@ -4,6 +4,7 @@ import User from '../models/userModel.js';
 const protect = async (req, res, next) => {
   try {
     if (req.headers.authorization.startsWith('Bearer')) {
+      console.log('line 7', req.headers);
       const givenToken = req.headers.authorization.split(' ')[1];
       console.log(givenToken);
       //decode token

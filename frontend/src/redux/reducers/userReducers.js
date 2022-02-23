@@ -1,4 +1,7 @@
 import {
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -9,7 +12,7 @@ import {
 } from '../actions/types';
 let userInfo = JSON.parse(localStorage.getItem('userInfo'));
 if (!userInfo) userInfo = {};
-export const userLoginReducer = (initialState = userInfo, action) => {
+export const userLoginReducer = (initialState = { userInfo }, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };
@@ -31,6 +34,32 @@ export const userRegisterReducer = (initialState = userInfo, action) => {
     case USER_REGISTER_SUCCESS:
       return { loading: false, userInfo: action.payload };
     case USER_REGISTER_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return initialState;
+  }
+};
+
+export const userDetailsReducer = (initialState = { user: {} }, action) => {
+  switch (action.type) {
+    case USER_DETAILS_REQUEST:
+      return { ...initialState, loading: true };
+    case USER_DETAILS_SUCCESS:
+      return { loading: false, user: action.payload };
+    case USER_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return initialState;
+  }
+};
+
+export const userUpdateReducer = (initialState = {}, action) => {
+  switch (action.type) {
+    case USER_DETAILS_REQUEST:
+      return { loading: true };
+    case USER_DETAILS_SUCCESS:
+      return { loading: false, user: action.payload };
+    case USER_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     default:
       return initialState;

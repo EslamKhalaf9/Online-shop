@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -79,6 +82,43 @@ export const userRegister = (name, email, password) => async (dispatch) => {
     console.log(error.response);
     dispatch({
       type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.error
+          ? error.response.data.error
+          : error.message,
+    });
+  }
+};
+
+export const userDetails = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+
+    const { userLogin } = getState();
+    const { userInfo } = userLogin;
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    console.log(config.headers.authorization);
+
+    const { data } = await axios.get(
+      'http://localhost:5000/api/user/profile',
+      config
+    );
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: USER_DETAILS_FAIL,
       payload:
         error.response && error.response.data.error
           ? error.response.data.error
