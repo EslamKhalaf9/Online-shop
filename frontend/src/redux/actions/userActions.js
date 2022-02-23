@@ -4,6 +4,7 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
+  USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
 } from './types';
@@ -77,7 +78,7 @@ export const userRegister = (name, email, password) => async (dispatch) => {
   } catch (error) {
     console.log(error.response);
     dispatch({
-      type: USER_LOGIN_FAIL,
+      type: USER_REGISTER_FAIL,
       payload:
         error.response && error.response.data.error
           ? error.response.data.error

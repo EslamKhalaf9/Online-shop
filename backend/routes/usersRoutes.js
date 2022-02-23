@@ -3,6 +3,7 @@ import {
   postLogin,
   postSignup,
   getProfile,
+  putUpdate,
 } from '../controllers/userController.js';
 import protect from '../middleware/authMiddleware.js';
 
@@ -16,5 +17,8 @@ router.post('/signup', postSignup);
 
 // POST req to /api/user/profile
 router.get('/profile', protect, getProfile);
+
+// PUT req to /api/user/update
+router.put('/update', protect, putUpdate);
 
 export default router;

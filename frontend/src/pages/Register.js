@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogin, userRegister } from '../redux/actions/userActions';
+import { userRegister } from '../redux/actions/userActions';
 import Message from '../components/Message';
 import Spinner from '../components/Spinner';
 
