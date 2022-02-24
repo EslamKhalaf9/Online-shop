@@ -6,7 +6,7 @@ import Message from '../components/Message';
 import Spinner from '../components/Spinner';
 
 const Login = () => {
-  const [email, setUsername] = useState('admin@admin.com');
+  const [email, setEmail] = useState('admin@admin.com');
   const [password, setPassword] = useState('123456');
 
   const navigate = useNavigate();
@@ -35,11 +35,11 @@ const Login = () => {
       <h1 className='text-4xl'>Login</h1>
       <div className='form-groub'>
         <input
-          type='text'
+          type='email'
           placeholder='email'
           className='border p-2 m-2 w-full'
           value={email}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div className='form-groub'>

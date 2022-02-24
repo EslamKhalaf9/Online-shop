@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
-import Rate from "../components/Rate";
-import { productDetails } from "../redux/actions/productActions";
+import Rate from '../components/Rate';
+import { productDetails } from '../redux/actions/productActions';
 
 const ProductDetails = () => {
   const [qty, setQty] = useState(1);
@@ -37,7 +37,11 @@ const ProductDetails = () => {
           <div className='wrapper grid md:grid-cols-3 gap-3'>
             {/* first col */}
             <div className='productImage shadow-xl hover:shadow-2xl overflow-hidden m-3'>
-              <img src={product.image} alt={product.name} />
+              <img
+                className='h-full w-full'
+                src={product.image}
+                alt={product.name}
+              />
             </div>
 
             {/* second col */}
@@ -64,7 +68,7 @@ const ProductDetails = () => {
               </div>
               <div className='row mb-4'>
                 <span className='status'>
-                  Status:{" "}
+                  Status:{' '}
                   {product.countInStock > 0 ? (
                     <span className='text-green-700'>In Stock</span>
                   ) : (
@@ -99,7 +103,7 @@ const ProductDetails = () => {
                       : `bg-slate-500 text-white py-2 px-4 rounded`
                   }
                 >
-                  {" "}
+                  {' '}
                   Add To Cart
                 </button>
               </div>

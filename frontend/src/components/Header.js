@@ -9,7 +9,6 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
-  console.log(userInfo);
   const naveListTogggler = () => {
     const list = document.querySelector('#nav-list');
     if (list.classList.contains('hidden')) {
@@ -20,7 +19,6 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    console.log('logging out...');
     dispatch(userLogout());
     navigate('/', { replace: false });
   };
